@@ -18,6 +18,10 @@ export default function App() {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
+    (async () => {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      setHasPermission(status === 'granted');
+    })();
   }, []);
   if (hasPermission === null) {
     return <View />;
@@ -35,6 +39,22 @@ export default function App() {
 
     }
   }
+  async function SavePicture() {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+
+
+    const asset = await MediaLibrary.createAssetAsync(photo);
+    const album = await MediaLibrary.getAlbumAsync(`Camera/photo-app/${year}/${month}/${day}`);
+
+    if (album === null) {
+      await MediaLibrary.createAlbumAsync(`Camera/photo-app/${year}/${month}/${day}`, asset, false);
+    } else {
+      await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
+    }
+  }
 
 
   return (
@@ -44,7 +64,7 @@ export default function App() {
         type={type}
         ref={camRef}
       >
-        <TouchableOpacity style={styles.buttonCambiar} onPress={() => {
+        <TouchableOpacity style={[styles.button, { left: 20 }]} onPress={() => {
           setType(
             type === Camera.Constants.Type.front ?
               Camera.Constants.Type.back :
@@ -54,7 +74,7 @@ export default function App() {
           <Ionicons name='ios-camera-reverse' size={30} color={'black'} />
           {/* <Text style={styles.buttonText} >Cambiar</Text> */}
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonPhoto} onPress={() => { takePicture() }}>
+        <TouchableOpacity style={[styles.button, { right: 20 }]} onPress={() => { takePicture() }}>
           <Ionicons name='camera' size={30} color={'black'} />
         </TouchableOpacity>
         {photo &&
@@ -64,11 +84,18 @@ export default function App() {
             transparent={false}
             visible={open}
           >
+            {/* boton de cerrar  */}
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-              <TouchableOpacity style={styles.buttonCambiar} onPress={() => {
+              <TouchableOpacity style={styles.button} onPress={() => {
                 setOpen(false);
               }}>
-                <Ionicons name='close-sharp' size={40} color={'red'} />
+                <Ionicons name='close-sharp' size={40} color={'black'} />
+              </TouchableOpacity>
+              {/* boton de guardar */}
+              <TouchableOpacity style={[styles.button, { right: 20 }]} onPress={() => {
+                SavePicture();
+              }}>
+                <Ionicons name='save-outline' size={40} color={'black'} />
               </TouchableOpacity>
               <Image
                 style={styles.photo}
@@ -97,10 +124,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 350
   },
-  buttonCambiar: {
+  button: {
     position: 'absolute',
     bottom: 20,
-    left: 20,
+
     paddingVertical: 12,
     paddingHorizontal: 20,
     backgroundColor: '#fff',
@@ -108,19 +135,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 15,
+
   },
-  buttonPhoto: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 15,
-  },
+
   buttonText: {
     fontSize: 16,
     color: '#ff0',
