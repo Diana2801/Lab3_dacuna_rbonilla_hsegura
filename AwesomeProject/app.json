@@ -17,24 +17,27 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSCameraUsageDescription": "Permitir el acceso a la cámara para tomar fotos",
-        "NSPhotoLibraryAddUsageDescription": "Permitir el acceso a la biblioteca de fotos para guardar las imágenes tomadas",
-        "NSPhotoLibraryUsageDescription": "Permitir el acceso a la biblioteca de fotos para guardar las imágenes tomadas"
+        "NSCameraUsageDescription": "Acceso a la cámara",
+        "NSPhotoLibraryAddUsageDescription": "Guardar fotos en la galería",
+        "NSPhotoLibraryUsageDescription": "Acceso a la galería de fotos"
+
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff",
-        "permissions": [
-          "CAMERA",
-          "WRITE_EXTERNAL_STORAGE"
-        ]
-      }
-      
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE"
+      ]
+
     },
     "web": {
       "favicon": "./assets/favicon.png"
     }
   }
 }
+
