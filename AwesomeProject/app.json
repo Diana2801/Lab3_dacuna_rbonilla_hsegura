@@ -20,6 +20,7 @@
         "NSCameraUsageDescription": "Acceso a la cámara",
         "NSPhotoLibraryAddUsageDescription": "Guardar fotos en la galería",
         "NSPhotoLibraryUsageDescription": "Acceso a la galería de fotos"
+
       }
     },
     "android": {
@@ -32,6 +33,7 @@
         "WRITE_EXTERNAL_STORAGE",
         "READ_EXTERNAL_STORAGE"
       ]
+
     },
     "web": {
       "favicon": "./assets/favicon.png"
