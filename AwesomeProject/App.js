@@ -1,24 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import CameraScreen from './screens/CameraScreen';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style = {styles.letras}>Hola Mundo</Text>
-      <StatusBar style="auto" />
+      <CameraScreen />
     </View>
   );
+  
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0f0',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    color: 'blue'
+    justifyContent: 'center',
   },
-  letras:{
-    color: 'blue'
-  }
+  
 });
