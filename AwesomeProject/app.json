@@ -15,13 +15,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Permitir el acceso a la cámara para tomar fotos",
+        "NSPhotoLibraryAddUsageDescription": "Permitir el acceso a la biblioteca de fotos para guardar las imágenes tomadas",
+        "NSPhotoLibraryUsageDescription": "Permitir el acceso a la biblioteca de fotos para guardar las imágenes tomadas"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "permissions": [
+          "CAMERA",
+          "WRITE_EXTERNAL_STORAGE"
+        ]
       }
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"
